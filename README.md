@@ -1,8 +1,4 @@
 <<<<<<< HEAD
-Segue abaixo o README atualizado, com as novas funcionalidades e explicações detalhadas:
-
----
-
 # Tigrinho – Jogo de Aposta
 
 ## Introdução
