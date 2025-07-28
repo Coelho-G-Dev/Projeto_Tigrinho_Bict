@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # sem campo vazio
 def entrada_valida(mensagem):
     while True:
@@ -89,3 +90,96 @@ while True:
     else:
         print("⚠️ Usuário ou senha incorretos. Tente novamente.")
 
+=======
+# sem campo vazio
+def entrada_valida(mensagem):
+    while True:
+        dado = input(mensagem).strip()  # strip remove espaços desnecessários
+        if dado: 
+            return dado
+        print("Preencha o campo vazio.")
+
+# cpf com 11 números e apenas números
+def validar_cpf(cpf): 
+    if len(cpf) == 11 and cpf.isdigit():  # .isdigit verifica se todos os caracteres informados são números.
+        return True
+    else:
+        return False
+
+# verifica se nome de usuário ou CPF já existem
+def verificar_existencia(usuario, cpf):
+    try:
+        with open("usuarios.txt", "r") as arquivo:
+            for linha in arquivo:
+                dados = linha.strip().split(",")
+                if len(dados) == 3:
+                    nome_salvo, cpf_salvo, _ = dados
+                    if usuario == nome_salvo:
+                        print("\n⚠️ Nome de usuário já existe. Escolha outro.")
+                        return True
+                    if cpf == cpf_salvo:
+                        print("\n⚠️ CPF já cadastrado.")
+                        return True
+    except FileNotFoundError:
+        pass  # se o arquivo não existir, significa que nenhum usuário foi cadastrado ainda
+    return False
+
+# apresentação inicial
+print("Seja bem-vindo ao NOMEDOJOGO! Antes de tudo, vamos começar com seu cadastro, preencha os dados a seguir corretamente.")
+
+while True:
+    usuario = entrada_valida("Digite seu nome de usuário:")
+
+    # loop cpf
+    while True:
+        cpf = input("Informe seu CPF:")
+        if validar_cpf(cpf):
+            break
+        else:
+            print("CPF inválido. Informe apenas números com 11 dígitos.")
+
+    senha = entrada_valida("Digite sua senha:")
+
+    # verifica se já existe um usuário ou CPF cadastrado
+    if verificar_existencia(usuario, cpf):
+        print("\n⚠️ Cadastro não permitido. Tente novamente.\n")
+    else:
+        break
+
+# Salvando os dados no arquivo usuarios.txt
+with open("usuarios.txt", "a") as arquivo:  # "a" (append) adiciona novos dados sem apagar os anteriores
+    arquivo.write(f"{usuario},{cpf},{senha}\n")  # armazena dados separados por vírgula
+
+print("\n✅ Cadastro realizado com sucesso!")
+
+# login
+print("\nAgora, faça login para acessar sua conta.")
+
+while True:
+    login_usuario = entrada_valida("Digite seu nome de usuário: ")
+    login_senha = entrada_valida("Digite sua senha: ")
+
+    # verifica se o usuário e a senha estão no arquivo
+    with open("usuarios.txt", "r") as arquivo:
+        usuarios_cadastrados = arquivo.readlines()
+
+    login_sucesso = False  # variavel controla o status do login
+
+    for linha in usuarios_cadastrados:
+        dados = linha.strip().split(",")
+
+        # Garantir que a linha tem exatamente três partes (nome, cpf e senha)
+        if len(dados) == 3:
+            nome_salvo, cpf_salvo, senha_salva = dados
+
+            if login_usuario == nome_salvo and login_senha == senha_salva:
+                print("\n✅ Login realizado com sucesso! Bem-vindo de volta!")
+                login_sucesso = True
+                break
+
+    if login_sucesso:
+        break  
+    else:
+        print("⚠️ Usuário ou senha incorretos. Tente novamente.")
+
+>>>>>>> 1440926 (Comit de conclusão do Projeto Tigrinho 🐯)

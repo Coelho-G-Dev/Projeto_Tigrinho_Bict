@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Segue abaixo o README atualizado, com as novas funcionalidades e explicações detalhadas:
 
 ---
@@ -377,3 +378,119 @@ Para garantir a sustentabilidade financeira da empresa, o módulo do banco contr
 ## Conclusão
 
 O projeto **Tigrinho** demonstra de forma prática conceitos avançados de programação e manipulação de dados em um sistema de apostas. Com as novas atualizações, o sistema incorpora a funcionalidade de _influencer_, condições diferenciadas de vitória e um módulo de gerenciamento financeiro robusto, garantindo transparência e sustentabilidade para a operação.
+=======
+# 🎰 Projeto Tigrinho – Simulador de Jogo de Aposta
+
+> Projeto acadêmico da disciplina **Fundamentos da Computação**, desenvolvido com o objetivo de aplicar conceitos de lógica de programação, estruturas condicionais, repetição, manipulação de arquivos e controle de fluxo.
+
+---
+
+## 📌 Sumário
+
+- [📖 Descrição](#-descrição)
+- [🎮 Funcionalidades](#-funcionalidades)
+- [🧠 Lógica do Jogo](#-lógica-do-jogo)
+- [🏦 Sistema de Banco](#-sistema-de-banco)
+- [🧾 Estrutura de Arquivos](#-estrutura-de-arquivos)
+- [🛠️ Requisitos](#️-requisitos)
+- [🚀 Execução](#-execução)
+- [📌 Considerações Finais](#-considerações-finais)
+
+---
+
+## 📖 Descrição
+
+O **Tigrinho** é um jogo de aposta em que o jogador gira uma matriz 3x3 com símbolos aleatórios (💸, 🐅, 🐯) e aposta dinheiro virtual para tentar formar combinações vencedoras.
+
+O sistema simula uma empresa de apostas, com:
+
+- Controle de usuários com login/cadastro
+- Status de **influencer** com chances diferenciadas de vitória
+- Manipulação do **banco da empresa**
+- Registro de saldo e histórico de transações
+- Estratégia de ganho baseada em aleatoriedade controlada
+
+---
+
+## 🎮 Funcionalidades
+
+### 👥 Cadastro e Login
+
+- Validação de **CPF**
+- Verificação de duplicidade de usuário
+- Registro do **status influencer** (0 = comum, 1 = influencer)
+
+### 💰 Gestão de Saldo
+
+- Saldo inicial de R$10
+- Opção de recarga com valores fixos (R$5, R$10, R$20, R$50)
+- Armazenamento em `usuarios.txt`
+
+### 🎲 Mecânica do Jogo
+
+- Geração de matriz 3x3 com símbolos aleatórios
+- Combinações vencedoras predefinidas (diagonais e linha central)
+- Cálculo de **multiplicador aleatório** ajustado com base na sorte e status
+
+### 🏦 Gerenciamento do Banco
+
+- Banco inicial com R$50.000
+- Controle de entradas e saídas por vitória/derrota
+- Histórico completo de transações em `banco.txt`
+
+---
+
+## 🧠 Lógica do Jogo
+
+### Influência do Status
+
+- Influencers têm maior probabilidade de formar combinações vencedoras.
+- A probabilidade é ajustada com base no saldo atual do banco.
+
+### Sistema de Multiplicador
+
+- Multiplicadores são calculados aleatoriamente com base em pesos.
+- Combinações múltiplas recebem bônus proporcional.
+
+### Registro de Giros
+
+- Cada rodada é numerada e os resultados são exibidos com feedback ao jogador.
+- O saldo é ajustado a cada giro, com controle de apostas.
+
+---
+
+## 🏦 Sistema de Banco
+
+- **Arquivo:** `banco.txt`
+- Armazena o saldo atual da "empresa"
+- Histórico de todas as transações (ganhos/perdas)
+- Garante a simulação de uma operação sustentável
+
+---
+
+## 🧾 Estrutura de Arquivos
+
+| Arquivo               | Função                                                                 |
+|----------------------|------------------------------------------------------------------------|
+| `Projeto Tigrinho.py` | Arquivo principal com lógica do jogo                                   |
+| `Tigrinho.ipynb`      | Versão notebook para testes e visualização no Jupyter                  |
+| `usuarios.txt`        | Armazena dados dos usuários (nome, CPF, senha, saldo, status)          |
+| `banco.txt`           | Contém o saldo e histórico do banco                                    |
+| `registro/mesclagem`  | Exemplos de dados e simulações                                         |
+
+---
+
+## 🛠️ Requisitos
+
+- Python 3.7 ou superior
+- Execução via terminal/console (modo texto)
+
+---
+
+## 🚀 Execução
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/Coelho-G-Dev/Projeto_Tigrinho_Bict.git
+   cd Projeto_Tigrinho_Bict
+>>>>>>> 1440926 (Comit de conclusão do Projeto Tigrinho 🐯)

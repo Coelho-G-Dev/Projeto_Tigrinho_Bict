@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import random
 
 # entrada válida
@@ -175,3 +176,182 @@ def main():
 
 if __name__ == "__main__":
     main()
+=======
+import random
+
+# entrada válida
+def entrada_valida(mensagem):
+    while True:
+        dado = input(mensagem).strip()
+        if dado:
+            return dado
+        print("Preencha o campo vazio.")
+
+# validação de CPF
+def validar_cpf(cpf):
+    return len(cpf) == 11 and cpf.isdigit()
+
+# verifica se usuário já existe
+def verificar_existencia(usuario, cpf):
+    try:
+        with open("usuarios.txt", "r") as arquivo:
+            for linha in arquivo:
+                dados = linha.strip().split(",")
+                if len(dados) == 4:
+                    nome_salvo, cpf_salvo, _, _ = dados
+                    if usuario == nome_salvo:
+                        print("\n⚠️ Nome de usuário já existe. Escolha outro.")
+                        return True
+                    if cpf == cpf_salvo:
+                        print("\n⚠️ CPF já cadastrado.")
+                        return True
+    except FileNotFoundError:
+        pass
+    return False
+
+# usuário com saldo inicial
+def registrar():
+    usuario = entrada_valida("Digite seu nome de usuário:")
+    while True:
+        cpf = input("Informe seu CPF:")
+        if validar_cpf(cpf):
+            break
+        else:
+            print("CPF inválido. Informe apenas números com 11 dígitos.")
+    senha = entrada_valida("Digite sua senha:")
+    if verificar_existencia(usuario, cpf):
+        print("\n⚠️ Cadastro não permitido. Tente novamente.\n")
+        return None, None, None
+    saldo_inicial = 10 
+    with open("usuarios.txt", "a") as arquivo:
+        arquivo.write(f"{usuario},{cpf},{senha},{saldo_inicial}\n")
+    print("\n✅ Cadastro realizado com sucesso!")
+    return usuario, senha, saldo_inicial
+
+# login e recuperação do saldo
+def login():
+    while True:
+        login_usuario = entrada_valida("Digite seu nome de usuário: ")
+        login_senha = entrada_valida("Digite sua senha: ")
+        with open("usuarios.txt", "r") as arquivo:
+            usuarios_cadastrados = arquivo.readlines()
+        for linha in usuarios_cadastrados:
+            dados = linha.strip().split(",")
+            if len(dados) == 4:
+                nome_salvo, _, senha_salva, saldo = dados
+                if login_usuario == nome_salvo and login_senha == senha_salva:
+                    print("\n✅ Login realizado com sucesso! Bem-vindo de volta!")
+                    return login_usuario, int(saldo)
+        print("⚠️ Usuário ou senha incorretos. Tente novamente.")
+
+# atualiza saldo do usuário no arquivo
+def atualizar_saldo(usuario, novo_saldo):
+    linhas = []
+    with open("usuarios.txt", "r") as arquivo:
+        for linha in arquivo:
+            dados = linha.strip().split(",")
+            if len(dados) == 4 and dados[0] == usuario:
+                dados[3] = str(novo_saldo)
+            linhas.append(",".join(dados))
+    with open("usuarios.txt", "w") as arquivo:
+        arquivo.write("\n".join(linhas) + "\n")
+
+def gerar_matriz():
+    simbolos = ["7", "🐅", "🐯"]
+    return [[random.choice(simbolos) for _ in range(3)] for _ in range(3)]
+
+def exibir_matriz(matriz):
+    print("-" * 20)
+    for linha in matriz:
+        print(" | ".join(linha))
+    print("-" * 20)
+
+def verificar_vitoria_spin(matriz):
+    for i in range(3):
+        if matriz[i][0] == matriz[i][1] == matriz[i][2] or matriz[0][i] == matriz[1][i] == matriz[2][i]:
+            return True
+    return False
+
+# adicionar saldo
+def adicionar_saldo(saldo):
+    print("\n💰 Opções para adicionar saldo: 5, 10, 20, 50 reais")
+    while True:
+        try:
+            valor = int(input("Quanto deseja adicionar? "))
+            if valor in [5, 10, 20, 50]:
+                return saldo + valor
+            else:
+                print("Opção inválida. Escolha entre 5, 10, 20 ou 50 reais.")
+        except ValueError:
+            print("Digite um número válido.")
+
+# jogo
+def jogar(nome, saldo):
+    while True:
+        print(f"\n💵 Saldo atual: R${saldo}")
+        opcao = input("Deseja adicionar saldo? (s/n): ").strip().lower()
+        if opcao == "s":
+            saldo = adicionar_saldo(saldo)
+            atualizar_saldo(nome, saldo)
+            continue
+        elif opcao == "n":
+            break
+        else:
+            print("Digite 's' para sim ou 'n' para não.")
+    
+    while True:
+        try:
+            giros = int(input("Informe o número de giros que você deseja: "))
+            if giros <= 0 or giros > saldo:
+                print("O número de giros deve ser maior que zero e menor ou igual ao saldo!")
+                continue
+            break
+        except ValueError:
+            print("Por favor, digite um número inteiro válido.")
+    
+    win_count = 0
+    for giro in range(1, giros + 1):
+        saldo -= 1
+        input(f"\nPressione Enter para realizar o giro {giro}...")
+        print(f"\n=== Giro {giro} ===")
+        matriz = gerar_matriz()
+        exibir_matriz(matriz)
+        if verificar_vitoria_spin(matriz):
+            print(" WIN  ")
+            saldo += 2
+            win_count += 1
+        else:
+            print("Giro sem vitória. Tente novamente!")
+    
+    atualizar_saldo(nome, saldo)
+    print("\n=== Fim dos Giros ===")
+    print(f"Você obteve {win_count} giro(s) vencedor(es).")
+    print(f"Seu saldo atual é R${saldo}.")
+    
+    continuar = input("Deseja continuar jogando? (s/n): ").strip().lower()
+    if continuar == "s":
+        jogar(nome, saldo)
+    else:
+        print("Obrigado por jogar! Até a próxima! 🐯")
+
+def main():
+    print(" Bem-vindo ao Tigrinho 🐯 ")
+    while True:
+        escolha = input("Você já possui cadastro? (s/n): ").strip().lower()
+        if escolha == "s":
+            nome, saldo = login()
+            if nome:
+                break
+        elif escolha == "n":
+            nome, _, saldo = registrar()
+            if nome:
+                nome, saldo = login()
+                if nome:
+                    break
+        else:
+            print("Por favor, responda com 's' para sim ou 'n' para não.")
+    jogar(nome, saldo)
+
+if __name__ == "__main__":
+    main()
+>>>>>>> 1440926 (Comit de conclusão do Projeto Tigrinho 🐯)
